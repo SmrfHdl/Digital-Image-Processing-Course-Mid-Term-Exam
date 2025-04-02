@@ -1,0 +1,13 @@
+Từ ảnh gốc -> chia thành ảnh chính và ảnh bao gồm các vật thể cần tìm.
+Tiền xử lý: grayscale -> gaussian blur -> hist equalization.
+Xử lý:
+Tiếp cận 1: template matching
+    - Lần 1: tìm thấy 2/12 (threshold = 0.7, nghĩa là chỉ khi conf > threshold thì mới tính là tìm thấy).
+    - Lần 2: giảm threshold = 0.4 -> tìm thấy 12/12. 
+         + Không vẽ được bounding box -> sửa lại hàm visualize: gọi trực tiếp location từ result thay vì gọi qua details.
+         + Vẽ được -> Kiểm tra thấy đang sai vật 4, 5, 6, 8: Nhận thấy các vật này đều có scale = 0.5, trong khi các vật khác là 0.75.
+Tiếp cận 2: feature matching
+    - Lần 1: tìm thấy 12/12, tương tự với vấn đề visualize. Kiểm tra thì thấy bounding box rất xấu (không bao được các vật một cách rõ ràng)
+        -> Nhận thấy hướng này chưa ổn -> quay lại template matching.
+Quay lại với template matching: 
+    Thay đổi scale range, min = 0.75 và đã tìm thấy hết các vật. 
